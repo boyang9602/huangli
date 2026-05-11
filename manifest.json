@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "黄历 Chinese Almanac",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Traditional Chinese calendar with hexagenary cycle, solar terms, festivals, and daily almanac.",
   "permissions": [
     "storage"

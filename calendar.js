@@ -3,7 +3,7 @@
   var WEEKS = ['日', '一', '二', '三', '四', '五', '六'];
 
   function getChineseHourIndex(hour) {
-    if (hour === 23) return 0;
+    if (hour === 23) return 12;
     return Math.floor((hour + 1) / 2);
   }
 
@@ -38,6 +38,8 @@
     try { s28Luck = star28.getLuck().getName(); } catch (e) {}
 
     var hours = scd.getHours();
+    var nextScd = solar.next(1).getSixtyCycleDay();
+    hours.push(nextScd.getHours()[0]);
 
     var gods = scd.getGods();
     var godsGood = [];
@@ -122,7 +124,8 @@
       var isCurrent = i === currentHourIdx;
       var luckClass = isCurrent ? '' : (isGood ? 'hour-good' : 'hour-bad');
       return '<div class="hour-cell' + (isCurrent ? ' current' : '') + '">' +
-        '<div class="hour-gz">' + gz + '</div>' +
+        '<div class="hour-gz">' + gz.charAt(0) + '</div>' +
+        '<div class="hour-gz">' + gz.charAt(1) + '</div>' +
         '<div class="hour-luck ' + luckClass + '">' + (isGood ? '吉' : '凶') + '</div>' +
         '</div>';
     }).join('');

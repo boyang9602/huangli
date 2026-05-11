@@ -269,7 +269,10 @@
     try {
       var data = Cal.getDayData(year, month, day);
       var weekDay = new Date(year, month - 1, day).getDay();
-      Cal.renderDayDetail(detail, data, { weekDay: weekDay, showFooter: false });
+      var now = new Date();
+      var currentHourIdx = (year === now.getFullYear() && month === now.getMonth() + 1 && day === now.getDate())
+        ? Cal.getChineseHourIndex(now.getHours()) : undefined;
+      Cal.renderDayDetail(detail, data, { weekDay: weekDay, currentHourIdx: currentHourIdx, showFooter: false });
     } catch (e) {
       detail.innerHTML = '<div style="padding:16px;color:#888">无法加载日期信息</div>';
     }

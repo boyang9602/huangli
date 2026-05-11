@@ -189,15 +189,15 @@ body {
 }
 .hours-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(13, 1fr);
   border-bottom: 1px solid var(--paper-mid);
 }
 .hour-cell {
-  padding: 4px 1px;
+  padding: 3px 1px;
   text-align: center;
   border-right: 1px solid var(--paper-mid);
 }
-.hour-cell:nth-child(6n) { border-right: none; }
+.hour-cell:nth-child(13n) { border-right: none; }
 .hour-cell.current { background: var(--red); }
 .hour-cell.current .hour-gz,
 .hour-cell.current .hour-time,
