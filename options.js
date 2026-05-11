@@ -241,15 +241,20 @@
       var solarFest = solarDay.getFestival();
       var lunarFest = lunarDay.getFestival();
       var fests = [];
-      if (solarFest) fests.push(solarFest.getName());
-      if (lunarFest) fests.push(lunarFest.getName());
+      if (solarFest) {
+        fests.push(solarFest.getName());
+      }
+      if (lunarFest) {
+        fests.push(lunarFest.getName());
+      }
       festText = fests.join(' ');
     } catch (e) { }
 
     cell.innerHTML =
       '<div class="day-lunar-main">' + lunarDayName + '</div>' +
-      '<div class="day-solar-sub">' + secondaryText + '</div>' +
-      '<div class="day-weekday' + (wdIdx === 0 || wdIdx === 6 ? ' weekend' : '') + '">' + weekdayChar + '</div>' +
+      '<div class="day-solar-sub">' + secondaryText + ' (' +
+      '<span class="day-weekday' + (wdIdx === 0 || wdIdx === 6 ? ' weekend' : '') + '">周' + weekdayChar + '</span>' +
+      ')</div>' + 
       (termText ? '<div class="day-term">' + termText + '</div>' : '') +
       (festText ? '<div class="day-festival">' + festText + '</div>' : '');
 
@@ -281,10 +286,12 @@
     links.style.display = 'flex';
     var ms = String(month).padStart(2, '0');
     var ds = String(day).padStart(2, '0');
+    var dateStr = year + '-' + ms + '-' + ds;
+    var dateCompact = year + ms + ds;
     links.innerHTML =
       '<span class="cal-links-label">添加到日历</span>' +
-      '<a class="cal-link-btn" href="https://calendar.google.com/calendar/r/day/' + year + '/' + month + '/' + day + '" target="_blank" rel="noopener">Google 日历</a>' +
-      '<a class="cal-link-btn" href="https://outlook.live.com/calendar/0/view/day?date=' + year + '-' + ms + '-' + ds + '" target="_blank" rel="noopener">Outlook 日历</a>';
+      '<a class="cal-link-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=' + dateCompact + '/' + dateCompact + '" target="_blank" rel="noopener">Google 日历</a>' +
+      '<a class="cal-link-btn" href="https://outlook.live.com/calendar/0/action/compose?startdt=' + dateStr + '&enddt=' + dateStr + '&path=/calendar/action/compose&rru=addevent" target="_blank" rel="noopener">Outlook 日历</a>';
   }
 
   function navigateLunar(delta) {
