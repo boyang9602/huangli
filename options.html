@@ -301,43 +301,49 @@
       gap: 8px;
       align-items: center;
     }
-    .cal-links-label {
-      font-size: 12px;
-      color: #888;
-      margin-right: 4px;
+
+    .footer-website {
+      text-align: center;
+      font-size: 15px;
+      color: #5d5d5d;
+      padding: 20px 0 0 0;
     }
-    .cal-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 12px;
-      border-radius: 4px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
+    .footer-website a {
+      color: #5d5d5d;
       text-decoration: none;
-      transition: background 0.15s;
-      border: 1px solid var(--border);
-      color: var(--ink);
-      background: var(--paper);
     }
-    .cal-link-btn:hover {
-      background: var(--paper-dark);
-      border-color: var(--red);
+    .footer-website a:hover {
+      color: var(--red);
     }
 
     .footer-credit {
       text-align: center;
-      font-size: 11px;
+      font-size: 15px;
       color: #999;
-      padding: 20px 0 10px;
+      padding: 10px 0;
     }
     .footer-credit a {
       color: #999;
       text-decoration: none;
     }
     .footer-credit a:hover {
+      color: var(--red);
+    }
+
+    .btn-today {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s;
+    }
+    .btn-today:hover {
+      border-color: var(--red);
       color: var(--red);
     }
   </style>
@@ -372,6 +378,7 @@
     <div class="cal-jump" id="cal-jump">
       <select id="jump-year"></select>
       <select id="jump-month"></select>
+      <button id="btn-today" class="btn-today">回到今日</button>
     </div>
 
     <div class="cal-grid" id="cal-grid"></div>
@@ -379,11 +386,12 @@
     <div class="day-detail" id="day-detail" style="display:none"></div>
     <div class="cal-links" id="cal-links" style="display:none"></div>
   </div>
-
+  <div class="footer-website"><a href="https://huangli365.pages.dev/" target="_blank" rel="noopener">前往本项目网站查阅更多黄历信息</a></div>
   <div class="footer-credit">本项目基于 <a href="https://github.com/6tail/tyme4ts" target="_blank" rel="noopener">tyme4ts</a> (MIT license)</div>
 
 </div>
 
+<script src="add-to-calendar-button@2.js"></script>
 <script src="tyme.min.js"></script>
 <script src="calendar.js"></script>
 <script src="options.js"></script>

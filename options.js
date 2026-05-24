@@ -11,8 +11,10 @@
   var viewMode = 'lunar';
 
   // Western view state
-  var currentYear  = new Date().getFullYear();
-  var currentMonth = new Date().getMonth() + 1;
+  var currentDate = new Date();
+  var currentYear  = currentDate.getFullYear();
+  var currentMonth = currentDate.getMonth() + 1;
+  var currentDay = currentDate.getDate();
 
   // Lunar view state
   var currentLunarYear, currentLunarMonth;
@@ -59,6 +61,8 @@
   function showDayDetail(year, month, day) {
     var detail = $('day-detail');
     detail.style.display = 'block';
+    var cl = $('cal-links');
+    cl.style.display = 'flex';
     try {
       var data = Cal.getDayData(year, month, day);
       var now = new Date();
@@ -74,15 +78,33 @@
 
     var ms = String(month).padStart(2, '0');
     var ds = String(day).padStart(2, '0');
-    var dateStr    = year + '-' + ms + '-' + ds;
-    var dateCompact = year + ms + ds;
+    var iso = year + '-' + ms + '-' + ds;
 
-    var links = $('cal-links');
-    links.style.display = 'flex';
-    links.innerHTML =
-      '<span class="cal-links-label">添加到日历</span>' +
-      '<a class="cal-link-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=' + dateCompact + '/' + dateCompact + '" target="_blank" rel="noopener">Google 日历</a>' +
-      '<a class="cal-link-btn" href="https://outlook.live.com/calendar/0/action/compose?startdt=' + dateStr + '&enddt=' + dateStr + '&path=/calendar/action/compose&rru=addevent" target="_blank" rel="noopener">Outlook 日历</a>';
+    var cl = $('cal-links');
+    cl.innerHTML = '';
+    var atcb = document.createElement('add-to-calendar-button');
+    atcb.setAttribute('name', '黄历\u00b7' + iso);
+    atcb.setAttribute('startDate', iso);
+    atcb.setAttribute('options', "['Apple','Google','iCal','Outlook.com','Microsoft365','Yahoo']");
+    atcb.setAttribute('language', 'zh');
+    atcb.setAttribute('lightMode', 'light');
+    atcb.setAttribute('label', '添加到日历');
+    atcb.setAttribute('trigger', 'click');
+    atcb.setAttribute('hideBranding', '');
+    atcb.setAttribute('size', '5|5|4');
+    atcb.setAttribute('styleLight',
+      '--btn-background:#FDF6E3;--btn-text:#1A1A1A;' +
+      '--btn-border:1px solid #C4A35A;--btn-border-radius:4px;' +
+      '--btn-padding-x:13px;--btn-padding-y:5px;' +
+      '--btn-hover-background:#F5E6C8;--btn-hover-text:#1A1A1A;--btn-hover-border:#C0392B;' +
+      "--font:'Noto Serif SC','Songti SC',SimSun,serif;" +
+      '--btn-font-weight:600;--btn-shadow:none;--btn-hover-shadow:none;--btn-active-shadow:none;' +
+      '--base-font-size-m:12px;' +
+      '--list-background:#FDF6E3;--list-text:#1A1A1A;' +
+      '--list-border:1px solid #C4A35A;' +
+      '--list-hover-background:#F5E6C8;--list-hover-text:#C0392B;--list-border-radius:4px;'
+    );
+    cl.appendChild(atcb);
   }
 
   function clearSelection() {
@@ -185,11 +207,27 @@
     renderCalendar();
   });
 
+  $('btn-today').addEventListener('click', function () {
+    // 1. Get the freshest date in case the page has been open for a while
+    var d = new Date();
+    currentYear = d.getFullYear();
+    currentMonth = d.getMonth() + 1;
+    currentDay = d.getDate();
+
+    // 2. setViewMode already has the built-in logic to reset the calendar grid 
+    // to the current month/year for whatever viewMode is currently active.
+    setViewMode(viewMode);
+
+    // 3. Select today's date
+    onDaySelect(currentYear, currentMonth, currentDay, Cal.getTodayStr());
+  });
+
   // ============================================================
   // INIT
   // ============================================================
 
   chrome.storage.local.get('viewMode', function (data) {
     setViewMode(data.viewMode || 'lunar');
+    onDaySelect(currentYear, currentMonth, currentDay, Cal.getTodayStr());
   });
 })();
