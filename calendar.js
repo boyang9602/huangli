@@ -41,8 +41,11 @@
     var scd = solar.getSixtyCycleDay();
     var lunar = solar.getLunarDay();
 
-    var yearGZ = lunar.getYearSixtyCycle();
-    var monthGZ = lunar.getMonthSixtyCycle();
+    var lunarMonth = lunar.getLunarMonth();
+
+    var yearGZ = lunarMonth.getLunarYear().getSixtyCycle();
+    var monthGZ = lunarMonth.getSixtyCycle();
+
     var dayGZ = scd.getSixtyCycle();
     var animal = yearGZ.getEarthBranch().getZodiac().getName();
 
